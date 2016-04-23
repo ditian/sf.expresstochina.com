@@ -1,3 +1,10 @@
+// Global variables
+var NAME_ID = "ctl00_ctl00_ctl00_ContentPlaceHolder1_ContentPlaceHolder1_ContentPlaceHolder1_TXT_RECV_USERNAME";
+var PHONE_NUMBER_ID = "ctl00_ctl00_ctl00_ContentPlaceHolder1_ContentPlaceHolder1_ContentPlaceHolder1_TXT_RECV_TEL1";
+var ADDRESS_ID = "ctl00_ctl00_ctl00_ContentPlaceHolder1_ContentPlaceHolder1_ContentPlaceHolder1_TXT_RECV_ADDRESS";
+var POSTAL_CODE_ID = "ctl00_ctl00_ctl00_ContentPlaceHolder1_ContentPlaceHolder1_ContentPlaceHolder1_TXT_RECV_POST";
+
+
 // getClipboardText()
 // return any text that is currently on the clipboard
 function getClipboardText() {
@@ -41,17 +48,33 @@ function getClipboardText() {
     return clipboardText;
 }
 
-function autofill() {
+// parse(clipboardText)
+// Extract [province, city, district, address, postalCode, name, phoneNumber] from TaoBao-formatted receiver 
+// information.
+function parse(clipboardText) {
+    var infoArray0 = clipboardText.split('，');  // split by the comma of Chinese character
+    for (var i = 0; i < infoArray0.length; ++i) {  // remove leading and trailing whitespaces
+        infoArray0[i] = infoArray0[i].trim();
+    }
+    // now infoArray0 is [compositeAddress, postalCode, name, phoneNumber]
+    
+    console.log(infoArray0[0]);
+    console.log(infoArray0[1]);
+    console.log(infoArray0[2]);
+    console.log(infoArray0[3]);
+}
+
+function autofill(infoArray) {
     console.log(getClipboardText());
     var clipboardText = getClipboardText();
-    document.getElementById("ctl00_ctl00_ctl00_ContentPlaceHolder1_ContentPlaceHolder1_ContentPlaceHolder1_" + 
-        "TXT_RECV_ADDRESS").value = clipboardText;
-    document.getElementById("ctl00_ctl00_ctl00_ContentPlaceHolder1_ContentPlaceHolder1_ContentPlaceHolder1_" +
-        "ctrlProviceCityArea_DropDownList1").value = clipboardText;
-    setTimeout('__doPostBack(\'ctl00$ctl00$ctl00$ContentPlaceHolder1$ContentPlaceHolder1$ContentPlaceHolder1$ctrlProviceCityArea$DropDownList1\',\'\')', 0);
+    document.getElementById(ADDRESS_ID).value = clipboardText;
+    // document.getElementById("ctl00_ctl00_ctl00_ContentPlaceHolder1_ContentPlaceHolder1_ContentPlaceHolder1_" +
+    //    "ctrlProviceCityArea_DropDownList1").value = clipboardText;
+    // setTimeout('__doPostBack(\'ctl00$ctl00$ctl00$ContentPlaceHolder1$ContentPlaceHolder1$ContentPlaceHolder1$ctrlProviceCityArea$DropDownList1\',\'\')', 0);
 }
 
 autofill();
+parse(getClipboardText());
 
 // __doPostBack(eventTarget, eventArgument)
 // Submit the option which is selected from the dropdown list to the server, requesting for more follow-up information.
