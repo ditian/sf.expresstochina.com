@@ -4,6 +4,13 @@ var PHONE_NUMBER_ID = 'ctl00_ctl00_ctl00_ContentPlaceHolder1_ContentPlaceHolder1
 var ADDRESS_ID = 'ctl00_ctl00_ctl00_ContentPlaceHolder1_ContentPlaceHolder1_ContentPlaceHolder1_TXT_RECV_ADDRESS';
 var POSTAL_CODE_ID = 'ctl00_ctl00_ctl00_ContentPlaceHolder1_ContentPlaceHolder1_ContentPlaceHolder1_TXT_RECV_POST';
 
+var PROVINCE_NAME = 'ctl00$ctl00$ctl00$ContentPlaceHolder1$ContentPlaceHolder1$ContentPlaceHolder1$ctrlProviceCityArea$DropDownList1';
+var PROVINCE_ID = 'ctl00_ctl00_ctl00_ContentPlaceHolder1_ContentPlaceHolder1_ContentPlaceHolder1_ctrlProviceCityArea_DropDownList1';
+var CITY_NAME = 'ctl00$ctl00$ctl00$ContentPlaceHolder1$ContentPlaceHolder1$ContentPlaceHolder1$ctrlProviceCityArea$DropDownList2';
+var CITY_ID = 'ctl00_ctl00_ctl00_ContentPlaceHolder1_ContentPlaceHolder1_ContentPlaceHolder1_ctrlProviceCityArea_DropDownList2';
+var DISTRICT_NAME = 'ctl00$ctl00$ctl00$ContentPlaceHolder1$ContentPlaceHolder1$ContentPlaceHolder1$ctrlProviceCityArea$DropDownList3';
+var DISTRICT_ID = 'ctl00_ctl00_ctl00_ContentPlaceHolder1_ContentPlaceHolder1_ContentPlaceHolder1_ctrlProviceCityArea_DropDownList3';
+
 // getClipboardText()
 // return any text that is currently on the clipboard
 function getClipboardText() {
@@ -111,13 +118,54 @@ function parse(clipboardText) {
 // autofill(infoArray)
 // infoArray = [province, city, district, address, postalCode, name, phoneNumber]
 function autofill(infoArray) {
+    var province = infoArray[0];
+    var city = infoArray[1];
+    var district = infoArray[2];
+    
+    // set province value and post it back to the server to get follow-up information of city
+    var provinceDropdownList = document.getElementById(PROVINCE_ID);
+    var provinceOptions = provinceDropdownList.options;
+    var provinceValue;
+    for (var i = 0; i < provinceOptions.length; ++i) {
+        if (provinceOptions[i].text == province) {
+            provinceValue = provinceOptions[i].value;
+            break;
+        }
+    }
+    provinceDropdownList.value = provinceValue;
+    var execStrProvince = '__doPostBack(\'' + PROVINCE_NAME + '\',\'\')';
+    setTimeout(execStrProvince, 0);
+
+    // set city value and post it back to the server to get follow-up information of district
+    var cityDropdownList = document.getElementById(CITY_ID);
+    var cityOptions = cityDropdownList.options;
+    var cityValue;
+    for (var i = 0; i < cityOptions.length; ++i) {
+        if (cityOptions[i].text == city) {
+            cityValue = cityOptions[i].value;
+            break;
+        }
+    }
+    cityDropdownList.value = cityValue;
+    var execStrCity = '__doPostBack(\'' + CITY_NAME + '\',\'\')';
+    setTimeout(execStrCity, 0);
+
+    // set district value; no postBack needed
+    var districtDropdownList = document.getElementById(DISTRICT_ID);
+    var districtOptions = districtDropdownList.options;
+    var districtValue;
+    for (var i = 0; i < districtOptions.length; ++i) {
+        if (districtOptions[i].text == district) {
+            districtValue = districtOptions[i].value;
+            break;
+        }
+    }
+    districtDropdownList.value = districtValue;
+
     document.getElementById(ADDRESS_ID).value = infoArray[3];
     document.getElementById(POSTAL_CODE_ID).value = infoArray[4];
     document.getElementById(NAME_ID).value = infoArray[5];
     document.getElementById(PHONE_NUMBER_ID).value = infoArray[6];
-    // document.getElementById("ctl00_ctl00_ctl00_ContentPlaceHolder1_ContentPlaceHolder1_ContentPlaceHolder1_" +
-    //    "ctrlProviceCityArea_DropDownList1").value = clipboardText;
-    // setTimeout('__doPostBack(\'ctl00$ctl00$ctl00$ContentPlaceHolder1$ContentPlaceHolder1$ContentPlaceHolder1$ctrlProviceCityArea$DropDownList1\',\'\')', 0);
 }
 
 autofill(parse(getClipboardText()));
