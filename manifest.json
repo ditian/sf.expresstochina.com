@@ -3,7 +3,7 @@
 
   "name": "sf.expresstochina.com Autofill",
   "description": "This extension performs receiver information autofill for sf.expresstochina.com.",
-  "version": "1.0",
+  "version": "1.5",
 
   "browser_action": {
     "default_title": "Click to autofill"
