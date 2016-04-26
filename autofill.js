@@ -76,7 +76,7 @@ function parse(clipboardText) {
     var province;
     var city;
     var district;
-    var firstTwoCharacters = provinceCityDistrict.substr(0, 3);
+    var firstTwoCharacters = provinceCityDistrict.substr(0, 2);
     if (firstTwoCharacters == '北京') {
         province = '北京';
         city = '北京市';
