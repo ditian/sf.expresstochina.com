@@ -197,35 +197,38 @@ function autofill(infoArray) {
 
     // for Feiyang Express:
     // Text boxes which need to be filled are inside the content document of the iframe of the dialog box.
-    var documentFeiyang = document.getElementById(DIALOG_IFRAME_FEIYANG).contentDocument;
-    if (documentFeiyang) {
-        var nameBoxFeiyang = documentFeiyang.getElementById(NAME_ID_FEIYANG);
-        if (nameBoxFeiyang) {
-            nameBoxFeiyang.value = infoArray[5];
-        }
-        var phoneNumberBoxFeiyang = documentFeiyang.getElementById(PHONE_NUMBER_ID_FEIYANG);
-        if (phoneNumberBoxFeiyang) {
-            phoneNumberBoxFeiyang.value = infoArray[6];
-        }
-        var countryBoxFeiyang = documentFeiyang.getElementById(COUNTRY_ID_FEIYANG);
-        if (countryBoxFeiyang) {
-            countryBoxFeiyang.value = '中国';
-        }
-        var provinceBoxFeiyang = documentFeiyang.getElementById(PROVINCE_ID_FEIYANG);
-        if (provinceBoxFeiyang) {
-            provinceBoxFeiyang.value = province;
-        }
-        var cityBoxFeiyang = documentFeiyang.getElementById(CITY_ID_FEIYANG);
-        if (cityBoxFeiyang) {
-            cityBoxFeiyang.value = city;
-        }
-        var postalCodeBoxFeiyang = documentFeiyang.getElementById(POSTAL_CODE_ID_FEIYANG);
-        if (postalCodeBoxFeiyang) {
-            postalCodeBoxFeiyang.value = infoArray[4];
-        }
-        var addressBoxFeiyang = documentFeiyang.getElementById(ADDRESS_ID_FEIYANG);
-        if (addressBoxFeiyang) {
-            addressBoxFeiyang.value = district + ' ' + infoArray[3];  // district + address
+    var iframeFeiyang = document.getElementById(DIALOG_IFRAME_FEIYANG);
+    if (iframeFeiyang) {
+        var documentFeiyang = iframeFeiyang.contentDocument;
+        if (documentFeiyang) {
+            var nameBoxFeiyang = documentFeiyang.getElementById(NAME_ID_FEIYANG);
+            if (nameBoxFeiyang) {
+                nameBoxFeiyang.value = infoArray[5];
+            }
+            var phoneNumberBoxFeiyang = documentFeiyang.getElementById(PHONE_NUMBER_ID_FEIYANG);
+            if (phoneNumberBoxFeiyang) {
+                phoneNumberBoxFeiyang.value = infoArray[6];
+            }
+            var countryBoxFeiyang = documentFeiyang.getElementById(COUNTRY_ID_FEIYANG);
+            if (countryBoxFeiyang) {
+                countryBoxFeiyang.value = '中国';
+            }
+            var provinceBoxFeiyang = documentFeiyang.getElementById(PROVINCE_ID_FEIYANG);
+            if (provinceBoxFeiyang) {
+                provinceBoxFeiyang.value = province;
+            }
+            var cityBoxFeiyang = documentFeiyang.getElementById(CITY_ID_FEIYANG);
+            if (cityBoxFeiyang) {
+                cityBoxFeiyang.value = city;
+            }
+            var postalCodeBoxFeiyang = documentFeiyang.getElementById(POSTAL_CODE_ID_FEIYANG);
+            if (postalCodeBoxFeiyang) {
+                postalCodeBoxFeiyang.value = infoArray[4];
+            }
+            var addressBoxFeiyang = documentFeiyang.getElementById(ADDRESS_ID_FEIYANG);
+            if (addressBoxFeiyang) {
+                addressBoxFeiyang.value = district + ' ' + infoArray[3];  // district + address
+            }
         }
     }
 }
