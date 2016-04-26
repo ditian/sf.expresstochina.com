@@ -11,6 +11,15 @@ var CITY_ID = 'ctl00_ctl00_ctl00_ContentPlaceHolder1_ContentPlaceHolder1_Content
 var DISTRICT_NAME = 'ctl00$ctl00$ctl00$ContentPlaceHolder1$ContentPlaceHolder1$ContentPlaceHolder1$ctrlProviceCityArea$DropDownList3';
 var DISTRICT_ID = 'ctl00_ctl00_ctl00_ContentPlaceHolder1_ContentPlaceHolder1_ContentPlaceHolder1_ctrlProviceCityArea_DropDownList3';
 
+var NAME_ID_FEIYANG = 'txtRece_name';
+var PHONE_NUMBER_ID_FEIYANG = 'txtRece_mobilephone';
+var COUNTRY_ID_FEIYANG = 'txtRece_country';
+var PROVINCE_ID_FEIYANG = 'txtRece_province';
+var CITY_ID_FEIYANG = 'txtRece_city';
+var POSTAL_CODE_ID_FEIYANG = 'txtRece_postoffice';
+var ADDRESS_ID_FEIYANG = 'txtRece_postoffice';
+
+
 // getClipboardText()
 // return any text that is currently on the clipboard
 function getClipboardText() {
@@ -124,48 +133,96 @@ function autofill(infoArray) {
     
     // set province value and post it back to the server to get follow-up information of city
     var provinceDropdownList = document.getElementById(PROVINCE_ID);
-    var provinceOptions = provinceDropdownList.options;
-    var provinceValue;
-    for (var i = 0; i < provinceOptions.length; ++i) {
-        if (provinceOptions[i].text == province) {
-            provinceValue = provinceOptions[i].value;
-            break;
+    if (provinceDropdownList) {
+        var provinceOptions = provinceDropdownList.options;
+        var provinceValue;
+        for (var i = 0; i < provinceOptions.length; ++i) {
+            if (provinceOptions[i].text == province) {
+                provinceValue = provinceOptions[i].value;
+                break;
+            }
         }
+        provinceDropdownList.value = provinceValue;
+        var execStrProvince = '__doPostBack(\'' + PROVINCE_NAME + '\',\'\')';
+        setTimeout(execStrProvince, 0);
     }
-    provinceDropdownList.value = provinceValue;
-    var execStrProvince = '__doPostBack(\'' + PROVINCE_NAME + '\',\'\')';
-    setTimeout(execStrProvince, 0);
 
     // set city value and post it back to the server to get follow-up information of district
     var cityDropdownList = document.getElementById(CITY_ID);
-    var cityOptions = cityDropdownList.options;
-    var cityValue;
-    for (var i = 0; i < cityOptions.length; ++i) {
-        if (cityOptions[i].text == city) {
-            cityValue = cityOptions[i].value;
-            break;
+    if (cityDropdownList) {
+        var cityOptions = cityDropdownList.options;
+        var cityValue;
+        for (var i = 0; i < cityOptions.length; ++i) {
+            if (cityOptions[i].text == city) {
+                cityValue = cityOptions[i].value;
+                break;
+            }
         }
+        cityDropdownList.value = cityValue;
+        var execStrCity = '__doPostBack(\'' + CITY_NAME + '\',\'\')';
+        setTimeout(execStrCity, 0);
     }
-    cityDropdownList.value = cityValue;
-    var execStrCity = '__doPostBack(\'' + CITY_NAME + '\',\'\')';
-    setTimeout(execStrCity, 0);
 
     // set district value; no postBack needed
     var districtDropdownList = document.getElementById(DISTRICT_ID);
-    var districtOptions = districtDropdownList.options;
-    var districtValue;
-    for (var i = 0; i < districtOptions.length; ++i) {
-        if (districtOptions[i].text == district) {
-            districtValue = districtOptions[i].value;
-            break;
+    if (districtDropdownList) {
+        var districtOptions = districtDropdownList.options;
+        var districtValue;
+        for (var i = 0; i < districtOptions.length; ++i) {
+            if (districtOptions[i].text == district) {
+                districtValue = districtOptions[i].value;
+                break;
+            }
         }
+        districtDropdownList.value = districtValue;
     }
-    districtDropdownList.value = districtValue;
 
-    document.getElementById(ADDRESS_ID).value = infoArray[3];
-    document.getElementById(POSTAL_CODE_ID).value = infoArray[4];
-    document.getElementById(NAME_ID).value = infoArray[5];
-    document.getElementById(PHONE_NUMBER_ID).value = infoArray[6];
+    var addressBox = document.getElementById(ADDRESS_ID);
+    if (addressBox) {
+        addressBox.value = infoArray[3];
+    }
+    var postalCodeBox = document.getElementById(POSTAL_CODE_ID);
+    if (postalCodeBox) { 
+        postalCodeBox.value = infoArray[4];
+    }
+    var nameBox = document.getElementById(NAME_ID);
+    if (nameBox) {
+        nameBox.value = infoArray[5];
+    }
+    var phoneNumberBox = document.getElementById(PHONE_NUMBER_ID);
+    if (phoneNumberBox) {
+        phoneNumberBox.value = infoArray[6];
+    }
+
+    // for Feiyang Express:
+    var nameBoxFeiyang = document.getElementById(NAME_ID_FEIYANG);
+    if (nameBoxFeiyang) {
+        nameBoxFeiyang.value = infoArray[5];
+    }
+    var phoneNumberBoxFeiyang = document.getElementById(PHONE_NUMBER_ID_FEIYANG);
+    if (phoneNumberBoxFeiyang) {
+        phoneNumberBoxFeiyang.value = infoArray[6];
+    }
+    var countryBoxFeiyang = document.getElementById(COUNTRY_ID_FEIYANG);
+    if (countryBoxFeiyang) {
+        countryBoxFeiyang.value = '中国';
+    }
+    var provinceBoxFeiyang = document.getElementById(PROVINCE_ID_FEIYANG);
+    if (provinceBoxFeiyang) {
+        provinceBoxFeiyang.value = province;
+    }
+    var cityBoxFeiyang = document.getElementById(CITY_ID_FEIYANG);
+    if (cityBoxFeiyang) {
+        cityBoxFeiyang.value = city;
+    }
+    var postalCodeBoxFeiyang = document.getElementById(POSTAL_CODE_ID_FEIYANG);
+    if (postalCodeBoxFeiyang) {
+        postalCodeBoxFeiyang.value = infoArray[4];
+    }
+    var addressBoxFeiyang = document.getElementById(ADDRESS_ID_FEIYANG);
+    if (addressBoxFeiyang) {
+        addressBoxFeiyang.value = district + ' ' + infoArray[3];  // district + address
+    }
 }
 
 autofill(parse(getClipboardText()));
